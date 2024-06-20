@@ -4,7 +4,6 @@ from currencyExchangeService import CurrencyExchangeService, get_currency_exchan
 app = FastAPI()
 
 # 路由設定
-
 @app.get("/convert")
 def convert_currency(
     source: str = Query(...),
@@ -12,6 +11,7 @@ def convert_currency(
     amount: str = Query(...),
     service: CurrencyExchangeService = Depends(get_currency_exchange_service)
 ):
+
     converted_amount, error = service.convert(source, target, amount)
     if error:
         raise HTTPException(status_code=400, detail=error)
@@ -22,3 +22,7 @@ def convert_currency(
 @app.get("/currencies")
 def get_currencies(service: CurrencyExchangeService = Depends(get_currency_exchange_service)):
     return {"currencies": service.rates}
+
+@app.get("/")
+async def root():
+    return {"test": "Hello World~"}
