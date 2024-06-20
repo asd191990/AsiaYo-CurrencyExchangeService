@@ -3,26 +3,31 @@ from main import app
 
 client = TestClient(app)
 
+#測試基本轉換是否正常
 def test_valid_conversion():
     response = client.get("/convert?source=USD&target=JPY&amount=1,525")
     assert response.status_code == 200
     assert response.json() == {"msg": "success", "amount": "170,496.53"}
 
+#測試貨幣無效情況
 def test_invalid_currency():
     response = client.get("/convert?source=XXX&target=JPY&amount=100")
     assert response.status_code == 400
     assert response.json() == {"detail": "Invalid source or target currency"}
 
+#測試amount格式不合格
 def test_invalid_amount_format():
     response = client.get("/convert?source=USD&target=JPY&amount=abc")
     assert response.status_code == 400
     assert response.json() == {"detail": "Invalid amount format"}
 
+#測試負數金額
 def test_negative_amount():
     response = client.get("/convert?source=USD&target=JPY&amount=-100")
     assert response.status_code == 400
     assert response.json() == {"detail": "Amount must be positive"}
 
+#確認四捨五入
 def test_rounding():
     response = client.get("/convert?source=USD&target=JPY&amount=1,234.567")
     assert response.status_code == 200
