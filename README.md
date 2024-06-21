@@ -65,13 +65,14 @@ FastAPI 提供 內建的swagger 可供測試。
 
 ## docker hub 
 
-快速下載
-    https://hub.docker.com/r/asd191990/currencyexchange
+https://hub.docker.com/r/asd191990/currencyexchange
 
+PULL
+    docker pull asd191990/currencyexchange
 啟動
     docker run -d -p 80:80 asiayo-currencyexchangeimage
 
 ### 網站連結
 
-- http://0.0.0.0:80
-- http://0.0.0.0:80/docs
+- [http://localhost](http://localhost)
+- [http://localhost/docs](http://localhost/docs)
